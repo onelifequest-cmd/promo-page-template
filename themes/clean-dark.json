@@ -24,7 +24,8 @@
     "embers": false,
     "spotIcon": "slot",
     "formStyle": "card",
-    "heroMotif": "pulse"
+    "heroMotif": "pulse",
+    "bats": false
   },
   "copyDefaults": {
     "spotsNoun": "spots",

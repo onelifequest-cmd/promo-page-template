@@ -123,10 +123,86 @@ label.field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mi
 .slam{animation:slam .55s ease both}
 @keyframes drip{0%{transform:translateY(-8px);opacity:0}100%{transform:translateY(0);opacity:1}}
 .drip{animation:drip .7s ease both}
+
+/* ---- bats (halloween theme; pointer-events none) ---- */
+#bat-layer{position:fixed;inset:0;z-index:25;pointer-events:none;overflow:hidden}
+.abat{position:absolute;left:0;top:0;width:42px;color:#1a0a08;opacity:0;filter:drop-shadow(0 0 6px rgba(255,100,40,.35));will-change:transform}
+.abat svg{display:block;width:100%;height:auto;overflow:visible}
+.abat .wing{transform-origin:50% 42%;animation:batflap .2s ease-in-out infinite alternate}
+.abat.s2{width:28px;opacity:0}
+.abat.s3{width:34px}
+.abat.s4{width:22px}
+@keyframes batflap{to{transform:scaleY(.42) rotate(-4deg)}}
+@keyframes batpath1{
+  0%{transform:translate(-80px,18vh) rotate(8deg);opacity:0}
+  8%{opacity:.9}
+  25%{transform:translate(22vw,8vh) rotate(-6deg)}
+  50%{transform:translate(50vw,22vh) rotate(10deg)}
+  75%{transform:translate(78vw,10vh) rotate(-4deg)}
+  92%{opacity:.85}
+  100%{transform:translate(110vw,16vh) rotate(6deg);opacity:0}
+}
+@keyframes batpath2{
+  0%{transform:translate(110vw,55vh) scaleX(-1) rotate(-4deg);opacity:0}
+  10%{opacity:.8}
+  35%{transform:translate(70vw,40vh) scaleX(-1) rotate(8deg)}
+  60%{transform:translate(40vw,60vh) scaleX(-1) rotate(-10deg)}
+  85%{opacity:.75}
+  100%{transform:translate(-90px,48vh) scaleX(-1) rotate(4deg);opacity:0}
+}
+@keyframes batpath3{
+  0%{transform:translate(-70px,70vh) rotate(4deg);opacity:0}
+  12%{opacity:.75}
+  40%{transform:translate(35vw,58vh) rotate(-12deg)}
+  70%{transform:translate(72vw,72vh) rotate(8deg)}
+  100%{transform:translate(110vw,62vh) rotate(-2deg);opacity:0}
+}
+.abat.a1{animation:batpath1 16s linear infinite}
+.abat.a2{animation:batpath2 21s linear infinite 4s}
+.abat.a3{animation:batpath3 18s linear infinite 9s}
+.abat.a4{animation:batpath1 20s linear infinite 12s reverse;width:30px}
+/* delivery bat + envelope */
+.dbat-wrap{position:fixed;inset:0;z-index:60;pointer-events:none;overflow:hidden}
+.dbat{position:absolute;width:120px;color:#140806;filter:drop-shadow(0 0 12px rgba(255,110,30,.55));opacity:0;will-change:transform}
+.dbat svg{display:block;width:100%;height:auto;overflow:visible}
+.dbat .wing{transform-origin:50% 42%;animation:batflap .16s ease-in-out infinite alternate}
+.dbat .env{position:absolute;left:50%;top:72%;width:54px;height:36px;margin-left:-27px;border-radius:4px;background:linear-gradient(160deg,#F5E6D3,#E8C9A0);border:1px solid #C4956A;box-shadow:0 4px 12px rgba(0,0,0,.35);transform-origin:50% 0}
+.dbat .env::before{content:"";position:absolute;left:0;right:0;top:0;height:0;border-left:27px solid transparent;border-right:27px solid transparent;border-top:16px solid #D4A574}
+.dbat .env span{position:absolute;inset:14px 4px 4px;font:700 8px/1.1 system-ui,sans-serif;color:#5A3A22;text-align:center;letter-spacing:.02em}
+@keyframes dbat-in{
+  0%{transform:translate(-160px,12vh) rotate(-8deg);opacity:0}
+  15%{opacity:1}
+  55%{transform:translate(calc(50vw - 60px),28vh) rotate(4deg)}
+  70%{transform:translate(calc(50vw - 60px),32vh) rotate(0)}
+  100%{transform:translate(calc(50vw - 60px),32vh) rotate(0);opacity:1}
+}
+@keyframes dbat-out{
+  0%{transform:translate(calc(50vw - 60px),32vh) rotate(0);opacity:1}
+  100%{transform:translate(110vw,-10vh) rotate(12deg);opacity:0}
+}
+.dbat.fly-in{animation:dbat-in 1.35s cubic-bezier(.3,.7,.4,1) forwards}
+.dbat.fly-out{animation:dbat-out 1.25s .15s cubic-bezier(.5,0,.6,1) forwards}
+.dbat.drop .env{animation:env-drop .45s ease forwards}
+@keyframes env-drop{
+  0%{transform:translateY(0) rotate(0);opacity:1}
+  100%{transform:translateY(48px) rotate(8deg);opacity:0}
+}
+@media (max-width:700px){
+  .abat{width:26px}
+  .abat.s2,.abat.a4{width:20px}
+  .abat.a3,.abat.a4{display:none} /* light on phones: 2 ambient */
+  .dbat{width:96px}
+}
+@media (prefers-reduced-motion:reduce){
+  .abat,.dbat,.dbat .wing,.abat .wing{animation:none !important;opacity:0 !important}
+  .dbat-wrap{display:none}
+}
+
 </style>
 </head>
 <body class="theme-{{THEME_ID}}">
 <div class="preview-banner" id="previewBanner">{{PREVIEW_BANNER}}</div>
+<div id="bat-layer" aria-hidden="true"></div>
 <canvas id="embers" aria-hidden="true"></canvas>
 <div class="stage">
   <div class="wrap">
@@ -444,6 +520,9 @@ window.__OFFER__ = {{OFFER_JSON}};
   function startHold(untilIso, payUrl, placeholder){
     $('formBody').classList.add('hide');
     $('done').classList.add('show');
+    $('doneBig').textContent = "You're in";
+    $('holdBox').style.display = '';
+    $('payBtn').style.display = '';
     const payBtn = $('payBtn');
     if (placeholder || !payUrl) {
       payBtn.href = '#';
@@ -503,13 +582,69 @@ window.__OFFER__ = {{OFFER_JSON}};
         $('payBtn').style.display = 'none';
         return;
       }
-      startHold(j.hold_until, j.pay && j.pay.url, j.placeholderPayment);
+      const goHold = () => startHold(j.hold_until, j.pay && j.pay.url, j.placeholderPayment);
+      if (window.__batDelivery) {
+        $('doneBig').textContent = 'Incoming…';
+        $('doneMsg').textContent = 'A bat is delivering your spot hold.';
+        $('formBody').classList.add('hide');
+        $('done').classList.add('show');
+        $('holdBox').style.display = 'none';
+        $('payBtn').style.display = 'none';
+        window.__batDelivery(() => {
+          $('holdBox').style.display = '';
+          $('payBtn').style.display = '';
+          goHold();
+        });
+      } else goHold();
     } catch (ex) {
       err.textContent = ex.message || 'Please try again.';
     } finally {
       btn.disabled = false; btn.textContent = label;
     }
   });
+
+
+  // ---- flying bats (theme.effects.bats) ----
+  const batsOn = !!effects.bats && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const BAT_SVG = `<svg viewBox="0 0 100 50" aria-hidden="true"><g class="wing" fill="currentColor"><path d="M50 20 C42 6 24 2 6 10 C14 14 16 20 14 26 C24 20 32 24 38 30 C42 24 46 22 50 26 Z"/><path d="M50 20 C58 6 76 2 94 10 C86 14 84 20 86 26 C76 20 68 24 62 30 C58 24 54 22 50 26 Z"/><ellipse cx="50" cy="28" rx="7" ry="8"/><circle cx="47" cy="25" r="1.2" fill="#F5E6D3"/><circle cx="53" cy="25" r="1.2" fill="#F5E6D3"/></g></svg>`;
+
+  function spawnAmbientBats(){
+    if (!batsOn) return;
+    const layer = $('bat-layer'); if (!layer) return;
+    const phone = matchMedia('(max-width:700px)').matches;
+    const specs = phone
+      ? [['a1','s2'],['a2','']]
+      : [['a1',''],['a2','s2'],['a3','s3'],['a4','s4']];
+    layer.innerHTML = '';
+    specs.forEach(([a,s], i) => {
+      const d = document.createElement('div');
+      d.className = 'abat ' + a + (s ? ' ' + s : '');
+      d.style.animationDelay = (i * 2.5) + 's';
+      d.innerHTML = BAT_SVG;
+      layer.appendChild(d);
+    });
+  }
+  spawnAmbientBats();
+
+  function playBatDelivery(then){
+    if (!batsOn) { if (then) then(); return; }
+    const wrap = document.createElement('div');
+    wrap.className = 'dbat-wrap';
+    wrap.innerHTML = `<div class="dbat fly-in" id="deliveryBat">${BAT_SVG}<div class="env"><span>SPOT<br>HELD</span></div></div>`;
+    document.body.appendChild(wrap);
+    const bat = wrap.querySelector('.dbat');
+    // mid-flight: drop envelope, then fly out
+    setTimeout(() => { bat.classList.add('drop'); }, 1450);
+    setTimeout(() => {
+      bat.classList.remove('fly-in');
+      bat.classList.add('fly-out');
+    }, 1750);
+    setTimeout(() => {
+      wrap.remove();
+      if (then) then();
+    }, 3100);
+  }
+  window.__batDelivery = playBatDelivery;
 
   // Embers canvas (optional)
   if (effects.embers) {

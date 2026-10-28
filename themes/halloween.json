@@ -24,7 +24,8 @@
     "embers": true,
     "spotIcon": "orb",
     "formStyle": "ledger",
-    "heroMotif": "lantern"
+    "heroMotif": "lantern",
+    "bats": true
   },
   "copyDefaults": {
     "spotsNoun": "spots",
