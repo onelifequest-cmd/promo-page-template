@@ -126,33 +126,33 @@ label.field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mi
 
 /* ---- bats (halloween theme; pointer-events none) ---- */
 #bat-layer{position:fixed;inset:0;z-index:25;pointer-events:none;overflow:hidden}
-.abat{position:absolute;left:0;top:0;width:64px;color:#5C2418;opacity:0;filter:drop-shadow(0 0 10px rgba(255,130,50,.75)) drop-shadow(0 2px 4px rgba(0,0,0,.6));will-change:transform}
+.abat{position:absolute;left:0;top:0;width:104px;color:#7A3220;opacity:0;filter:drop-shadow(0 0 12px rgba(255,140,55,.9)) drop-shadow(0 2px 6px rgba(0,0,0,.65));will-change:transform}
 .abat svg{display:block;width:100%;height:auto;overflow:visible}
 .abat .wing{transform-origin:50% 42%;animation:batflap .2s ease-in-out infinite alternate}
-.abat.s2{width:44px;opacity:0}
-.abat.s3{width:54px}
-.abat.s4{width:38px}
+.abat.s2{width:72px;opacity:0}
+.abat.s3{width:88px}
+.abat.s4{width:62px}
 @keyframes batflap{to{transform:scaleY(.42) rotate(-4deg)}}
 @keyframes batpath1{
   0%{transform:translate(-80px,18vh) rotate(8deg);opacity:0}
-  8%{opacity:.9}
+  8%{opacity:.98}
   25%{transform:translate(22vw,8vh) rotate(-6deg)}
   50%{transform:translate(50vw,22vh) rotate(10deg)}
   75%{transform:translate(78vw,10vh) rotate(-4deg)}
-  92%{opacity:.85}
+  92%{opacity:.95}
   100%{transform:translate(110vw,16vh) rotate(6deg);opacity:0}
 }
 @keyframes batpath2{
   0%{transform:translate(110vw,55vh) scaleX(-1) rotate(-4deg);opacity:0}
-  10%{opacity:.8}
+  10%{opacity:.95}
   35%{transform:translate(70vw,40vh) scaleX(-1) rotate(8deg)}
   60%{transform:translate(40vw,60vh) scaleX(-1) rotate(-10deg)}
-  85%{opacity:.75}
+  85%{opacity:.92}
   100%{transform:translate(-90px,48vh) scaleX(-1) rotate(4deg);opacity:0}
 }
 @keyframes batpath3{
   0%{transform:translate(-70px,70vh) rotate(4deg);opacity:0}
-  12%{opacity:.75}
+  12%{opacity:.92}
   40%{transform:translate(35vw,58vh) rotate(-12deg)}
   70%{transform:translate(72vw,72vh) rotate(8deg)}
   100%{transform:translate(110vw,62vh) rotate(-2deg);opacity:0}
@@ -160,15 +160,15 @@ label.field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mi
 .abat.a1{animation:batpath1 16s linear infinite}
 .abat.a2{animation:batpath2 21s linear infinite 4s}
 .abat.a3{animation:batpath3 18s linear infinite 9s}
-.abat.a4{animation:batpath1 20s linear infinite 12s reverse;width:48px}
+.abat.a4{animation:batpath1 20s linear infinite 12s reverse;width:78px}
 /* delivery bat + envelope */
 .dbat-wrap{position:fixed;inset:0;z-index:60;pointer-events:none;overflow:hidden}
-.dbat{position:absolute;width:120px;color:#140806;filter:drop-shadow(0 0 12px rgba(255,110,30,.55));opacity:0;will-change:transform}
+.dbat{position:absolute;width:180px;color:#2A120C;filter:drop-shadow(0 0 14px rgba(255,120,40,.75));opacity:0;will-change:transform}
 .dbat svg{display:block;width:100%;height:auto;overflow:visible}
 .dbat .wing{transform-origin:50% 42%;animation:batflap .16s ease-in-out infinite alternate}
-.dbat .env{position:absolute;left:50%;top:72%;width:54px;height:36px;margin-left:-27px;border-radius:4px;background:linear-gradient(160deg,#F5E6D3,#E8C9A0);border:1px solid #C4956A;box-shadow:0 4px 12px rgba(0,0,0,.35);transform-origin:50% 0}
-.dbat .env::before{content:"";position:absolute;left:0;right:0;top:0;height:0;border-left:27px solid transparent;border-right:27px solid transparent;border-top:16px solid #D4A574}
-.dbat .env span{position:absolute;inset:14px 4px 4px;font:700 8px/1.1 system-ui,sans-serif;color:#5A3A22;text-align:center;letter-spacing:.02em}
+.dbat .env{position:absolute;left:50%;top:72%;width:72px;height:48px;margin-left:-36px;border-radius:4px;background:linear-gradient(160deg,#F5E6D3,#E8C9A0);border:1px solid #C4956A;box-shadow:0 4px 12px rgba(0,0,0,.35);transform-origin:50% 0}
+.dbat .env::before{content:"";position:absolute;left:0;right:0;top:0;height:0;border-left:36px solid transparent;border-right:36px solid transparent;border-top:20px solid #D4A574}
+.dbat .env span{position:absolute;inset:18px 4px 4px;font:700 10px/1.1 system-ui,sans-serif;color:#5A3A22;text-align:center;letter-spacing:.02em}
 @keyframes dbat-in{
   0%{transform:translate(-160px,12vh) rotate(-8deg);opacity:0}
   15%{opacity:1}
@@ -188,10 +188,10 @@ label.field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mi
   100%{transform:translateY(48px) rotate(8deg);opacity:0}
 }
 @media (max-width:700px){
-  .abat{width:44px}
-  .abat.s2,.abat.a4{width:34px}
+  .abat{width:62px}
+  .abat.s2,.abat.a4{width:48px}
   .abat.a3,.abat.a4{display:none} /* light on phones: 2 ambient */
-  .dbat{width:96px}
+  .dbat{width:140px}
 }
 @media (prefers-reduced-motion:reduce){
   .abat,.dbat,.dbat .wing,.abat .wing{animation:none !important;opacity:0 !important}
