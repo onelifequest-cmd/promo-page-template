@@ -1,0 +1,111 @@
+{
+  "slug": "conquest-ai-limited-spots",
+  "theme": "halloween",
+  "demoMode": true,
+  "noindex": true,
+  "brand": {
+    "name": "Conquest AI",
+    "legalName": "MERKABA Global LLC",
+    "tagline": "AI receptionist + CRM automations for credit repair businesses",
+    "logoText": "Conquest AI",
+    "logoUrl": "",
+    "phone": "(407) 863-9276",
+    "phoneTel": "+14078639276",
+    "email": "hello@questwon.com",
+    "address": "Orlando, FL",
+    "timezone": "America/New_York"
+  },
+  "offer": {
+    "eyebrow": "LIMITED SPOTS · PREVIEW",
+    "headline": "Put Grace on your phones before the next busy week.",
+    "subhead": "Conquest AI sets up Grace, your AI receptionist, plus the CRM automations credit repair businesses use every day — follow-ups, reminders, and handoffs you approve before anything goes out.",
+    "regularPrice": "PLACEHOLDER",
+    "promoPrice": "PLACEHOLDER",
+    "currency": "USD",
+    "priceNote": "PLACEHOLDER — Patrick sets the real price before publish.",
+    "spotsTotal": 10,
+    "spotsNote": "PLACEHOLDER spots count — change in offer.json before publish.",
+    "holdMinutes": 15,
+    "deadline": "2026-11-02T23:59:00-05:00",
+    "deadlineNote": "PLACEHOLDER deadline (shown as America/New_York). Change before publish.",
+    "deadlineLabel": "Offer ends",
+    "ctaPrimary": "Claim a spot",
+    "ctaSecondary": "See what's included",
+    "paymentLink": "PLACEHOLDER_STRIPE_PAYMENT_LINK",
+    "paymentNote": "PLACEHOLDER — paste a Stripe Payment Link URL here. Do not create products from this template."
+  },
+  "features": [
+    {
+      "title": "Grace on your phones",
+      "body": "An AI receptionist that answers, qualifies, and books — using your scripts and rules."
+    },
+    {
+      "title": "CRM automations that fit credit repair",
+      "body": "Missed-call texts, appointment reminders, and nurture sequences wired into your CRM. Nothing sends until you approve the copy."
+    },
+    {
+      "title": "Setup done with you",
+      "body": "We configure Grace and the workflows with your team, then hand you the controls."
+    },
+    {
+      "title": "You stay in charge",
+      "body": "You approve messages, change hours, and pause anything. Conquest AI builds the system; you run the business."
+    }
+  ],
+  "steps": [
+    {
+      "n": "1",
+      "title": "Claim a spot",
+      "body": "Tell us your name, phone, and email. We hold a spot for 15 minutes while you finish checkout."
+    },
+    {
+      "n": "2",
+      "title": "Complete payment",
+      "body": "You'll go to a secure Stripe checkout (link set in config). PLACEHOLDER until Patrick adds the real payment link."
+    },
+    {
+      "n": "3",
+      "title": "Onboarding call",
+      "body": "We schedule setup for Grace and your CRM automations. You approve every message before anything goes live."
+    }
+  ],
+  "faq": [
+    {
+      "q": "What is Grace?",
+      "a": "Grace is Conquest AI's AI receptionist. She answers calls for credit repair businesses using the scripts and booking rules you set."
+    },
+    {
+      "q": "Does this replace my CRM?",
+      "a": "No. We connect Grace and automations to your CRM. You keep your existing contacts and pipelines."
+    },
+    {
+      "q": "Will anything message my clients without my OK?",
+      "a": "No. Automations stay off until you approve the copy and turn them on."
+    },
+    {
+      "q": "Is this a guarantee of more clients or revenue?",
+      "a": "No. Results vary by market, offer, and how you use the system. This page makes no performance promises."
+    },
+    {
+      "q": "What if spots run out?",
+      "a": "Submit the form anyway. We'll contact you about the next opening or current pricing."
+    }
+  ],
+  "form": {
+    "title": "Reserve your spot",
+    "lede": "We'll hold one spot for 15 minutes after you submit.",
+    "fields": [
+      {"id": "name", "label": "Full name", "type": "text", "required": true, "autocomplete": "name"},
+      {"id": "phone", "label": "Mobile phone", "type": "tel", "required": true, "autocomplete": "tel"},
+      {"id": "email", "label": "Email", "type": "email", "required": true, "autocomplete": "email"},
+      {"id": "business", "label": "Business name", "type": "text", "required": false, "autocomplete": "organization"}
+    ],
+    "consent": "I agree to be contacted by Conquest AI / MERKABA Global LLC by phone, text, or email about this offer. Msg & data rates may apply. Reply STOP to opt out.",
+    "submitLabel": "Hold my spot",
+    "honeypot": "website"
+  },
+  "compliance": {
+    "footer": "Conquest AI is a product of MERKABA Global LLC (Orlando, FL). This page is a PREVIEW template. Prices, spot counts, and payment links marked PLACEHOLDER are not live offers. No results are guaranteed. Automations and AI receptionist behavior depend on your scripts, CRM setup, and approval. Call (407) 863-9276 with questions.",
+    "previewBanner": "PREVIEW · DEMO MODE · not a live offer — prices & payment link are PLACEHOLDER"
+  }
+}

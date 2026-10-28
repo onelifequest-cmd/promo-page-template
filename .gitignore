@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.venv/
+server/leads.jsonl
+dist/leads.jsonl
+.DS_Store

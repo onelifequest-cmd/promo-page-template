@@ -1,0 +1,34 @@
+{
+  "id": "halloween",
+  "label": "Halloween",
+  "fonts": {
+    "display": "Creepster",
+    "accent": "IM Fell English",
+    "body": "Barlow",
+    "google": "Creepster&family=IM+Fell+English:ital@0;1&family=Anton&family=Barlow:wght@400;600;700"
+  },
+  "colors": {
+    "bg": "#0A0608",
+    "bg2": "#140A10",
+    "card": "#1A0E14",
+    "text": "#F5EDE6",
+    "muted": "#B8A49A",
+    "accent": "#FF6A1A",
+    "accent2": "#FFB347",
+    "danger": "#E83B3B",
+    "ok": "#3DCF7A",
+    "border": "rgba(255,106,26,0.35)",
+    "glow": "rgba(255,106,26,0.45)"
+  },
+  "effects": {
+    "embers": true,
+    "spotIcon": "orb",
+    "formStyle": "ledger",
+    "heroMotif": "lantern"
+  },
+  "copyDefaults": {
+    "spotsNoun": "spots",
+    "spotsNounSingular": "spot",
+    "holdLabel": "Holding your spot"
+  }
+}

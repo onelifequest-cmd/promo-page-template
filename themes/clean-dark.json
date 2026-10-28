@@ -1,0 +1,34 @@
+{
+  "id": "clean-dark",
+  "label": "Clean dark",
+  "fonts": {
+    "display": "Anton",
+    "accent": "Inter",
+    "body": "Inter",
+    "google": "Anton&family=Inter:wght@400;500;600;700"
+  },
+  "colors": {
+    "bg": "#06101F",
+    "bg2": "#0A1628",
+    "card": "#0E1A2E",
+    "text": "#E8F1FF",
+    "muted": "#8FA3BF",
+    "accent": "#2F8CFF",
+    "accent2": "#7CC4FF",
+    "danger": "#E5484D",
+    "ok": "#22D3EE",
+    "border": "rgba(47,140,255,0.35)",
+    "glow": "rgba(47,140,255,0.45)"
+  },
+  "effects": {
+    "embers": false,
+    "spotIcon": "slot",
+    "formStyle": "card",
+    "heroMotif": "pulse"
+  },
+  "copyDefaults": {
+    "spotsNoun": "spots",
+    "spotsNounSingular": "spot",
+    "holdLabel": "Holding your spot"
+  }
+}

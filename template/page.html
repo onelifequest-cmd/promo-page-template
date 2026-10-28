@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="{{THEME_COLOR}}">
+<title>{{PAGE_TITLE}}</title>
+<meta name="description" content="{{META_DESC}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family={{GOOGLE_FONTS}}&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:{{C_BG}};--bg2:{{C_BG2}};--card:{{C_CARD}};--text:{{C_TEXT}};--muted:{{C_MUTED}};
+  --accent:{{C_ACCENT}};--accent2:{{C_ACCENT2}};--danger:{{C_DANGER}};--ok:{{C_OK}};
+  --border:{{C_BORDER}};--glow:{{C_GLOW}};
+  --font-display:"{{F_DISPLAY}}",system-ui,sans-serif;
+  --font-accent:"{{F_ACCENT}}",Georgia,serif;
+  --font-body:"{{F_BODY}}",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.5;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;overflow-x:hidden}
+a{color:var(--accent2)}
+button,input,textarea{font:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-left)) 0 max(18px,env(safe-area-inset-right))}
+.preview-banner{position:sticky;top:0;z-index:50;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#0a0a0a;font:700 12px/1.3 var(--font-body);letter-spacing:.04em;text-align:center;padding:8px 12px}
+.preview-banner b{font-weight:800}
+canvas#embers{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.55}
+.stage{position:relative;z-index:1}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0 8px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:700;letter-spacing:.02em}
+.logo-mark{width:36px;height:36px;border-radius:10px;background:radial-gradient(circle at 30% 30%,var(--accent2),var(--accent));box-shadow:0 0 24px var(--glow);display:grid;place-items:center;font:800 14px var(--font-body);color:#06101F}
+.logo img{height:36px;width:auto;display:block}
+.phone-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid var(--border);background:color-mix(in srgb,var(--card) 88%,transparent);color:var(--text);text-decoration:none;font-weight:600;font-size:14px;white-space:nowrap}
+.phone-pill span{color:var(--muted);font-weight:500;font-size:12px}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center;padding:28px 0 12px}
+@media (max-width:860px){.hero{grid-template-columns:1fr;gap:20px;padding:18px 0 8px}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font:700 11px/1 var(--font-body);letter-spacing:.16em;text-transform:uppercase;color:var(--accent2);margin-bottom:14px}
+.eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 12px var(--ok);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(.85)}}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(34px,5.2vw,58px);line-height:1.05;margin:0 0 14px;letter-spacing:.01em}
+.theme-clean-dark h1{font-weight:400;letter-spacing:.02em;text-transform:uppercase}
+.sub{color:var(--muted);font-size:clamp(15px,2vw,18px);max-width:36em;margin:0 0 22px}
+.price-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px 18px;margin:0 0 18px}
+.price-was{font-size:20px;color:var(--muted);position:relative}
+.price-was::after{content:"";position:absolute;left:-4%;right:-4%;top:52%;height:3px;background:var(--danger);transform:rotate(-8deg);border-radius:2px}
+.price-now{font-family:var(--font-display);font-size:clamp(40px,6vw,64px);color:var(--accent2);line-height:1}
+.price-note{font-size:12px;color:var(--muted);width:100%}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin:8px 0 18px}
+.btn{appearance:none;border:0;cursor:pointer;border-radius:12px;padding:14px 22px;font:700 16px/1.1 var(--font-body);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s ease,box-shadow .15s ease,opacity .15s}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:linear-gradient(180deg,var(--accent2),var(--accent));color:#0a0a0a;box-shadow:0 10px 30px var(--glow)}
+.btn-primary:hover{box-shadow:0 14px 36px var(--glow)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+.hero-card{position:relative;background:linear-gradient(160deg,color-mix(in srgb,var(--card) 92%,var(--accent)),var(--card));border:1px solid var(--border);border-radius:22px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.35),0 0 40px color-mix(in srgb,var(--glow) 35%,transparent);overflow:hidden}
+.hero-card::before{content:"";position:absolute;inset:-40% -20% auto auto;width:220px;height:220px;background:radial-gradient(circle,var(--glow),transparent 70%);pointer-events:none}
+.motif{position:absolute;right:14px;top:14px;opacity:.9}
+.motif svg{width:64px;height:64px;display:block;filter:drop-shadow(0 0 12px var(--glow))}
+.count-label{font:700 11px/1 var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.count-big{font-family:var(--font-display);font-size:72px;line-height:1;color:var(--accent2)}
+.count-sub{color:var(--muted);font-size:14px;margin:4px 0 16px}
+.slots{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.slot{width:28px;height:28px;border-radius:8px;border:1px solid var(--border);background:color-mix(in srgb,var(--bg) 70%,transparent);position:relative}
+.slot.on{background:linear-gradient(160deg,var(--accent2),var(--accent));border-color:transparent;box-shadow:0 0 12px var(--glow)}
+.slot.held{background:color-mix(in srgb,var(--accent) 35%,transparent);border-style:dashed}
+.cd{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cd div{background:color-mix(in srgb,var(--bg) 75%,transparent);border:1px solid var(--border);border-radius:12px;padding:10px 6px;text-align:center}
+.cd b{display:block;font:700 22px/1 var(--font-body);color:var(--text)}
+.cd span{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.section{padding:42px 0}
+.section h2{font-family:var(--font-display);font-size:clamp(26px,3.5vw,36px);margin:0 0 8px}
+.section .lede{color:var(--muted);margin:0 0 22px;max-width:40em}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:800px){.grid3{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px}
+.card h3{margin:0 0 8px;font-size:17px}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:700px){.feat{grid-template-columns:1fr}}
+.feat .card{display:flex;gap:14px;align-items:flex-start}
+.feat .ico{flex:0 0 42px;width:42px;height:42px;border-radius:12px;background:color-mix(in srgb,var(--accent) 22%,transparent);border:1px solid var(--border);display:grid;place-items:center}
+.feat .ico svg{width:22px;height:22px;stroke:var(--accent2);fill:none;stroke-width:1.8}
+.steps{counter-reset:step}
+.step{display:grid;grid-template-columns:48px 1fr;gap:14px;align-items:start;margin:0 0 14px}
+.step .n{width:48px;height:48px;border-radius:14px;background:linear-gradient(160deg,var(--accent2),var(--accent));color:#0a0a0a;font:800 18px/48px var(--font-body);text-align:center}
+.claim{display:grid;grid-template-columns:1fr 1.05fr;gap:22px;align-items:start}
+@media (max-width:860px){.claim{grid-template-columns:1fr}}
+.form-shell{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:22px;box-shadow:0 18px 50px rgba(0,0,0,.3);position:relative}
+.theme-halloween .form-shell{background:
+  linear-gradient(180deg,color-mix(in srgb,var(--card) 92%,#3a2010),var(--card));
+  box-shadow:0 18px 50px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,180,100,.12)}
+.form-shell h3{font-family:var(--font-accent);font-size:26px;margin:0 0 6px}
+.form-shell .lede{margin-bottom:16px}
+label.field{display:block;margin:0 0 12px}
+label.field span{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+label.field input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:color-mix(in srgb,var(--bg) 80%,transparent);color:var(--text);outline:none}
+label.field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
+.hp{position:absolute;left:-9999px;opacity:0;height:0;width:0;overflow:hidden}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);margin:8px 0 14px}
+.consent input{margin-top:3px}
+.err{color:#FF8E7A;font-size:13px;min-height:1.2em;margin:0 0 8px}
+.done{display:none}
+.done.show{display:block}
+.form-body.hide{display:none}
+.hold-box{margin-top:12px;padding:14px;border-radius:14px;border:1px dashed var(--border);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.hold-box b{color:var(--accent2)}
+.faq details{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px 16px;margin:0 0 10px}
+.faq summary{cursor:pointer;font-weight:700}
+.faq p{margin:10px 0 0;color:var(--muted);font-size:14px}
+.foot{padding:28px 0 100px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:20px}
+.foot .brand{color:var(--text);font-weight:700;margin-bottom:6px}
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:40;display:none;gap:12px;align-items:center;padding:12px max(16px,env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--border)}
+.sticky.show{display:flex}
+.sticky .left{font-size:13px;color:var(--muted)}
+.sticky .left b{color:var(--accent2)}
+.sticky .btn{margin-left:auto;padding:12px 16px;font-size:14px}
+.ended .count-big,.ended .slot.on{opacity:.55}
+.ended .btn-primary{opacity:.7}
+@keyframes slam{0%{transform:scale(1.35);opacity:0}60%{transform:scale(.96)}100%{transform:scale(1);opacity:1}}
+.slam{animation:slam .55s ease both}
+@keyframes drip{0%{transform:translateY(-8px);opacity:0}100%{transform:translateY(0);opacity:1}}
+.drip{animation:drip .7s ease both}
+</style>
+</head>
+<body class="theme-{{THEME_ID}}">
+<div class="preview-banner" id="previewBanner">{{PREVIEW_BANNER}}</div>
+<canvas id="embers" aria-hidden="true"></canvas>
+<div class="stage">
+  <div class="wrap">
+    <header class="topbar">
+      <a class="logo" href="#top" id="brandLogo">
+        <span class="logo-mark" id="logoMark">CA</span>
+        <span id="logoText">{{BRAND_NAME}}</span>
+      </a>
+      <a class="phone-pill" href="tel:{{PHONE_TEL}}"><span>Call</span>{{PHONE}}</a>
+    </header>
+
+    <section class="hero" id="top">
+      <div>
+        <div class="eyebrow drip"><i></i> {{EYEBROW}}</div>
+        <h1 class="drip" style="animation-delay:.05s">{{HEADLINE}}</h1>
+        <p class="sub drip" style="animation-delay:.1s">{{SUBHEAD}}</p>
+        <div class="price-row drip" style="animation-delay:.15s">
+          <span class="price-was" id="priceWas">${{REGULAR_PRICE}}</span>
+          <span class="price-now slam" id="priceNow">${{PROMO_PRICE}}</span>
+          <div class="price-note" id="priceNote">{{PRICE_NOTE}}</div>
+        </div>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#claim">{{CTA_PRIMARY}}</a>
+          <a class="btn btn-ghost" href="#included">{{CTA_SECONDARY}}</a>
+        </div>
+      </div>
+      <aside class="hero-card" aria-live="polite">
+        <div class="motif" id="motif" aria-hidden="true"></div>
+        <div class="count-label" id="countLabel">Spots left</div>
+        <div class="count-big" id="count">—</div>
+        <div class="count-sub" id="countSub">Loading…</div>
+        <div class="slots" id="slots" aria-hidden="true"></div>
+        <div class="count-label">{{DEADLINE_LABEL}}</div>
+        <div class="cd" id="cd">
+          <div><b id="cd-d">0</b><span>Days</span></div>
+          <div><b id="cd-h">0</b><span>Hrs</span></div>
+          <div><b id="cd-m">0</b><span>Min</span></div>
+          <div><b id="cd-s">0</b><span>Sec</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section" id="included">
+      <h2>What's included</h2>
+      <p class="lede">Built for credit repair owners who want an AI receptionist and CRM automations without giving up control.</p>
+      <div class="feat" id="features"></div>
+    </section>
+
+    <section class="section">
+      <h2>How it works</h2>
+      <p class="lede">Three clear steps. No surprise sends.</p>
+      <div id="steps"></div>
+    </section>
+
+    <section class="section claim" id="claim">
+      <div>
+        <h2>Claim a spot</h2>
+        <p class="lede">Spots are limited. Submitting holds one for {{HOLD_MINUTES}} minutes while you finish payment.</p>
+        <div class="card" style="margin-top:12px">
+          <h3>Questions?</h3>
+          <p>Call <a href="tel:{{PHONE_TEL}}">{{PHONE}}</a> — Orlando, FL · Eastern time.</p>
+        </div>
+      </div>
+      <div class="form-shell">
+        <div class="form-body" id="formBody">
+          <h3 id="formTitle">{{FORM_TITLE}}</h3>
+          <p class="lede" id="formLede">{{FORM_LEDE}}</p>
+          <div class="err" id="err"></div>
+          <form id="form" novalidate>
+            <div id="fields"></div>
+            <input class="hp" type="text" name="website" id="f-website" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <label class="consent"><input type="checkbox" name="consent" id="f-consent" required> <span id="consentText">{{CONSENT}}</span></label>
+            <button class="btn btn-primary" type="submit" id="submit" style="width:100%">{{SUBMIT_LABEL}}</button>
+          </form>
+        </div>
+        <div class="done" id="done">
+          <h3 id="doneBig">You're in</h3>
+          <p id="doneMsg">Next step: complete payment to lock the spot.</p>
+          <div class="hold-box" id="holdBox">
+            <div id="holdLabel">Holding your spot</div>
+            <div><b id="holdT">15:00</b></div>
+            <div id="holdNote" style="font-size:12px;color:var(--muted);margin-top:6px"></div>
+          </div>
+          <p style="margin:14px 0 10px"><a class="btn btn-primary" id="payBtn" href="#" target="_blank" rel="noopener">Continue to payment</a></p>
+          <p id="payNote" style="font-size:12px;color:var(--muted)"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq" id="faq">
+      <h2>FAQ</h2>
+      <div id="faqList"></div>
+    </section>
+
+    <footer class="foot">
+      <div class="brand">{{BRAND_NAME}} · {{LEGAL_NAME}}</div>
+      <div>{{ADDRESS}} · <a href="tel:{{PHONE_TEL}}">{{PHONE}}</a></div>
+      <p id="compliance">{{COMPLIANCE}}</p>
+    </footer>
+  </div>
+</div>
+
+<div class="sticky" id="sticky">
+  <div class="left"><b id="stickyLeft">—</b> spots left · ends soon</div>
+  <a class="btn btn-primary" href="#claim">Claim a spot</a>
+</div>
+
+<script>
+window.__OFFER__ = {{OFFER_JSON}};
+</script>
+<script>
+(function(){
+  const O = window.__OFFER__;
+  const theme = O._theme || {};
+  const effects = theme.effects || {};
+  const spotsNoun = (theme.copyDefaults && theme.copyDefaults.spotsNoun) || 'spots';
+  const spotsNoun1 = (theme.copyDefaults && theme.copyDefaults.spotsNounSingular) || 'spot';
+  const demo = !!O.demoMode;
+  const total = Math.max(1, Number(O.offer.spotsTotal) || 10);
+  let left = total, taken = 0, held = 0, open = true;
+  let holdTimer = null;
+
+  const $ = (id) => document.getElementById(id);
+  const money = (v) => {
+    if (v === 'PLACEHOLDER' || v == null || v === '') return '—';
+    const n = Number(String(v).replace(/[^0-9.]/g,''));
+    if (!isFinite(n)) return String(v);
+    return n.toLocaleString('en-US', {maximumFractionDigits:0});
+  };
+
+  // Brand / logo
+  $('logoText').textContent = O.brand.name;
+  const initials = (O.brand.name || 'CA').split(/\s+/).map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  $('logoMark').textContent = initials;
+  if (O.brand.logoUrl) {
+    const img = document.createElement('img');
+    img.src = O.brand.logoUrl; img.alt = O.brand.name;
+    $('brandLogo').innerHTML = '';
+    $('brandLogo').appendChild(img);
+  }
+
+  // Motif SVG (original, not copied)
+  const motif = $('motif');
+  if (effects.heroMotif === 'lantern') {
+    motif.innerHTML = `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="22" y="14" width="20" height="34" rx="4" stroke="currentColor" stroke-width="2" color="var(--accent2)"/><path d="M26 14 V10 H38 V14" stroke="currentColor" stroke-width="2" color="var(--accent2)"/><circle cx="32" cy="30" r="6" fill="currentColor" color="var(--accent)" opacity=".85"/><path d="M20 50 H44" stroke="currentColor" stroke-width="2" color="var(--accent2)"/><path d="M28 48 v6 M36 48 v6" stroke="currentColor" stroke-width="2" color="var(--accent2)"/></svg>`;
+  } else {
+    motif.innerHTML = `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="18" fill="none" stroke="currentColor" stroke-width="2" color="var(--accent2)" opacity=".7"/><circle cx="32" cy="32" r="8" fill="currentColor" color="var(--accent)"/><circle cx="32" cy="32" r="26" fill="none" stroke="currentColor" stroke-width="1.5" color="var(--accent2)" opacity=".35"/></svg>`;
+  }
+
+  // Features
+  $('features').innerHTML = (O.features||[]).map(f => `
+    <div class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></div><div><h3>${esc(f.title)}</h3><p>${esc(f.body)}</p></div></div>`).join('');
+
+  // Steps
+  $('steps').innerHTML = (O.steps||[]).map(s => `
+    <div class="step"><div class="n">${esc(s.n)}</div><div class="card"><h3>${esc(s.title)}</h3><p>${esc(s.body)}</p></div></div>`).join('');
+
+  // FAQ
+  $('faqList').innerHTML = (O.faq||[]).map(f => `
+    <details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('');
+
+  // Form fields
+  $('fields').innerHTML = (O.form.fields||[]).map(f => `
+    <label class="field"><span>${esc(f.label)}${f.required?' *':''}</span>
+    <input id="f-${esc(f.id)}" name="${esc(f.id)}" type="${esc(f.type||'text')}" ${f.required?'required':''} autocomplete="${esc(f.autocomplete||'')}">
+    </label>`).join('');
+
+  function esc(s){ return String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  // Price display
+  const reg = O.offer.regularPrice, promo = O.offer.promoPrice;
+  $('priceWas').textContent = '$' + money(reg);
+  $('priceNow').textContent = '$' + money(promo);
+  if (String(reg).includes('PLACEHOLDER') || String(promo).includes('PLACEHOLDER')) {
+    $('priceWas').textContent = 'PLACEHOLDER';
+    $('priceNow').textContent = 'PLACEHOLDER';
+    $('priceWas').style.textDecoration = 'none';
+  }
+  $('priceNote').textContent = O.offer.priceNote || '';
+
+  // Slots paint
+  function paint(){
+    const noun = left === 1 ? spotsNoun1 : spotsNoun;
+    $('count').textContent = String(left);
+    $('countSub').textContent = open
+      ? `${taken} claimed · ${held} held · ${left} ${noun} left`
+      : 'This offer window is closed';
+    $('countLabel').textContent = open ? `${noun} left` : 'Offer closed';
+    $('stickyLeft').textContent = String(left);
+    const box = $('slots'); box.innerHTML = '';
+    for (let i=0;i<total;i++){
+      const d = document.createElement('div');
+      d.className = 'slot' + (i < taken ? '' : (i < taken+held ? ' held' : ' on'));
+      // on = still available visually (filled glow). taken = empty. held = dashed.
+      // Remap: available should glow
+      d.className = 'slot';
+      if (i < left) d.classList.add('on');
+      else if (i < left + held) d.classList.add('held');
+      box.appendChild(d);
+    }
+    document.body.classList.toggle('ended', !open || left <= 0);
+    if (!open || left <= 0) {
+      $('submit').disabled = true;
+    }
+  }
+
+  // Countdown
+  function tickCd(){
+    const end = Date.parse(O.offer.deadline);
+    const now = Date.now();
+    let ms = Math.max(0, end - now);
+    if (!isFinite(end)) ms = 0;
+    const s = Math.floor(ms/1000);
+    $('cd-d').textContent = String(Math.floor(s/86400));
+    $('cd-h').textContent = String(Math.floor((s%86400)/3600));
+    $('cd-m').textContent = String(Math.floor((s%3600)/60));
+    $('cd-s').textContent = String(s%60);
+    if (ms <= 0) open = false;
+  }
+  tickCd(); setInterval(tickCd, 1000);
+
+  // Sticky bar
+  const sticky = $('sticky');
+  const claim = $('claim');
+  const io = new IntersectionObserver((ents)=>{
+    ents.forEach(e => { sticky.classList.toggle('show', !e.isIntersecting); });
+  }, {threshold: 0.15});
+  io.observe(claim);
+
+  // ---- Demo-mode API (localStorage) OR real /api ----
+  const DEMO_KEY = 'promo_template_demo_' + (O.slug||'default');
+  function demoState(){
+    try { return JSON.parse(localStorage.getItem(DEMO_KEY) || 'null') || {taken:0, holds:[]}; }
+    catch { return {taken:0, holds:[]}; }
+  }
+  function saveDemo(st){ localStorage.setItem(DEMO_KEY, JSON.stringify(st)); }
+  function purgeHolds(st){
+    const now = Date.now();
+    st.holds = (st.holds||[]).filter(h => h.until > now);
+    return st;
+  }
+  function demoInfo(){
+    let st = purgeHolds(demoState()); saveDemo(st);
+    const heldN = st.holds.length;
+    const leftN = Math.max(0, total - st.taken - heldN);
+    const end = Date.parse(O.offer.deadline);
+    const isOpen = isFinite(end) ? Date.now() < end && leftN > 0 : leftN > 0;
+    return {
+      ok: true, demo: true,
+      price: O.offer.promoPrice,
+      regular: O.offer.regularPrice,
+      spots: total, taken: st.taken, held: heldN, left: leftN,
+      ends: O.offer.deadline, open: isOpen,
+      holdMinutes: O.offer.holdMinutes,
+      paymentLink: O.offer.paymentLink
+    };
+  }
+  function demoLead(data){
+    let st = purgeHolds(demoState());
+    const leftN = Math.max(0, total - st.taken - st.holds.length);
+    const end = Date.parse(O.offer.deadline);
+    const isOpen = isFinite(end) ? Date.now() < end && leftN > 0 : leftN > 0;
+    if (!isOpen || leftN <= 0) {
+      return { ok: true, open: false, left: 0, taken: st.taken, held: st.holds.length, spots: total };
+    }
+    const id = 'd_' + Math.random().toString(36).slice(2,10);
+    const until = Date.now() + (Number(O.offer.holdMinutes)||15)*60*1000;
+    st.holds.push({ id, until, name: data.name, email: data.email, phone: data.phone });
+    saveDemo(st);
+    const pay = O.offer.paymentLink;
+    const isPh = !pay || String(pay).includes('PLACEHOLDER');
+    return {
+      ok: true, open: true, id,
+      left: Math.max(0, total - st.taken - st.holds.length),
+      taken: st.taken, held: st.holds.length, spots: total,
+      hold_until: new Date(until).toISOString(),
+      pay: isPh ? null : { url: pay },
+      placeholderPayment: isPh
+    };
+  }
+  function demoStatus(id){
+    let st = purgeHolds(demoState()); saveDemo(st);
+    const h = (st.holds||[]).find(x => x.id === id);
+    return { ok: true, found: !!h, hold_until: h ? new Date(h.until).toISOString() : null, left: Math.max(0, total - st.taken - st.holds.length), taken: st.taken, held: st.holds.length };
+  }
+
+  async function api(path, opts){
+    if (demo) {
+      if (path.startsWith('/api/info')) return demoInfo();
+      if (path.startsWith('/api/lead')) return demoLead(JSON.parse(opts.body||'{}'));
+      if (path.startsWith('/api/status')) {
+        const u = new URL(path, location.origin);
+        return demoStatus(u.searchParams.get('c'));
+      }
+    }
+    const r = await fetch(path, Object.assign({cache:'no-store'}, opts||{}));
+    return await r.json();
+  }
+
+  async function loadInfo(){
+    try {
+      const j = await api('/api/info');
+      if (typeof j.left === 'number') {
+        left = Math.max(0, Math.min(total, j.left));
+        taken = j.taken || 0;
+        held = j.held || 0;
+        if (typeof j.open === 'boolean') open = j.open;
+        paint();
+      }
+    } catch(e) {}
+  }
+  loadInfo();
+  setInterval(() => { if (!document.hidden) loadInfo(); }, 30000);
+
+  function startHold(untilIso, payUrl, placeholder){
+    $('formBody').classList.add('hide');
+    $('done').classList.add('show');
+    const payBtn = $('payBtn');
+    if (placeholder || !payUrl) {
+      payBtn.href = '#';
+      payBtn.removeAttribute('target');
+      payBtn.textContent = 'Payment link PLACEHOLDER';
+      payBtn.classList.add('btn-ghost');
+      $('payNote').textContent = 'Demo / preview: set offer.paymentLink in offer.json to a real Stripe Payment Link before publish. No charge happens from this page.';
+      $('doneMsg').textContent = 'Spot held in demo mode. Payment link is still PLACEHOLDER.';
+    } else {
+      payBtn.href = payUrl;
+      $('payNote').textContent = 'Secure checkout opens in a new tab.';
+    }
+    const until = Date.parse(untilIso);
+    function tick(){
+      const ms = Math.max(0, until - Date.now());
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,'0');
+      const ss = String(s%60).padStart(2,'0');
+      $('holdT').textContent = mm + ':' + ss;
+      if (ms <= 0) {
+        $('holdNote').textContent = 'Hold expired — submit again if spots remain.';
+        clearInterval(holdTimer);
+      }
+    }
+    tick();
+    clearInterval(holdTimer);
+    holdTimer = setInterval(tick, 250);
+  }
+  window.__startHold = startHold;
+
+  $('form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const err = $('err'); err.textContent = '';
+    if ($('f-website') && $('f-website').value) return; // honeypot
+    const data = {
+      name: ($('f-name')||{}).value?.trim() || '',
+      phone: ($('f-phone')||{}).value?.trim() || '',
+      email: ($('f-email')||{}).value?.trim() || '',
+      business: ($('f-business')||{}).value?.trim() || '',
+      consent: !!($('f-consent')||{}).checked
+    };
+    if (!data.name) { err.textContent = 'Please enter your name.'; return; }
+    if (!data.phone || data.phone.replace(/\D/g,'').length < 10) { err.textContent = 'Please enter a valid mobile phone.'; return; }
+    if (!data.email || !/.+@.+\..+/.test(data.email)) { err.textContent = 'Please enter a valid email.'; return; }
+    if (!data.consent) { err.textContent = 'Please tick the consent box so we can contact you.'; return; }
+    const btn = $('submit'); btn.disabled = true; const label = btn.textContent; btn.textContent = 'Holding…';
+    try {
+      const j = await api('/api/lead', { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify(data) });
+      if (!j.ok) throw new Error(j.error || 'Something went wrong.');
+      if (typeof j.left === 'number') { left = j.left; taken = j.taken||0; held = j.held||0; paint(); }
+      if (j.open === false) {
+        $('formBody').classList.add('hide');
+        $('done').classList.add('show');
+        $('doneBig').textContent = 'Thanks — we\'ll be in touch';
+        $('doneMsg').textContent = 'This offer window is closed or full. We\'ll contact you about next steps or current pricing.';
+        $('holdBox').style.display = 'none';
+        $('payBtn').style.display = 'none';
+        return;
+      }
+      startHold(j.hold_until, j.pay && j.pay.url, j.placeholderPayment);
+    } catch (ex) {
+      err.textContent = ex.message || 'Please try again.';
+    } finally {
+      btn.disabled = false; btn.textContent = label;
+    }
+  });
+
+  // Embers canvas (optional)
+  if (effects.embers) {
+    const c = $('embers'); const ctx = c.getContext('2d');
+    let w, h, parts;
+    function resize(){ w = c.width = innerWidth * devicePixelRatio; h = c.height = innerHeight * devicePixelRatio; c.style.width = innerWidth+'px'; c.style.height = innerHeight+'px';
+      parts = Array.from({length: 48}, () => ({
+        x: Math.random()*w, y: Math.random()*h,
+        r: 0.6 + Math.random()*2.2,
+        vy: -0.2 - Math.random()*0.7,
+        vx: -0.2 + Math.random()*0.4,
+        a: 0.2 + Math.random()*0.55
+      }));
+    }
+    function frame(){
+      ctx.clearRect(0,0,w,h);
+      for (const p of parts){
+        p.x += p.vx * devicePixelRatio; p.y += p.vy * devicePixelRatio;
+        if (p.y < -10) { p.y = h+10; p.x = Math.random()*w; }
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,140,60,${p.a})`;
+        ctx.arc(p.x, p.y, p.r*devicePixelRatio, 0, Math.PI*2);
+        ctx.fill();
+      }
+      requestAnimationFrame(frame);
+    }
+    resize(); addEventListener('resize', resize); frame();
+  } else {
+    $('embers').style.display = 'none';
+  }
+
+  paint();
+})();
+</script>
+</body>
+</html>

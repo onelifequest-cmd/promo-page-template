@@ -1,0 +1,4 @@
+Built from offer.json
+theme=halloween
+demoMode=True
+slug=conquest-ai-limited-spots
