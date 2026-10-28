@@ -126,12 +126,12 @@ label.field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mi
 
 /* ---- bats (halloween theme; pointer-events none) ---- */
 #bat-layer{position:fixed;inset:0;z-index:25;pointer-events:none;overflow:hidden}
-.abat{position:absolute;left:0;top:0;width:52px;color:#2A100C;opacity:0;filter:drop-shadow(0 0 8px rgba(255,120,50,.55));will-change:transform}
+.abat{position:absolute;left:0;top:0;width:64px;color:#5C2418;opacity:0;filter:drop-shadow(0 0 10px rgba(255,130,50,.75)) drop-shadow(0 2px 4px rgba(0,0,0,.6));will-change:transform}
 .abat svg{display:block;width:100%;height:auto;overflow:visible}
 .abat .wing{transform-origin:50% 42%;animation:batflap .2s ease-in-out infinite alternate}
-.abat.s2{width:28px;opacity:0}
-.abat.s3{width:34px}
-.abat.s4{width:22px}
+.abat.s2{width:44px;opacity:0}
+.abat.s3{width:54px}
+.abat.s4{width:38px}
 @keyframes batflap{to{transform:scaleY(.42) rotate(-4deg)}}
 @keyframes batpath1{
   0%{transform:translate(-80px,18vh) rotate(8deg);opacity:0}
@@ -160,7 +160,7 @@ label.field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mi
 .abat.a1{animation:batpath1 16s linear infinite}
 .abat.a2{animation:batpath2 21s linear infinite 4s}
 .abat.a3{animation:batpath3 18s linear infinite 9s}
-.abat.a4{animation:batpath1 20s linear infinite 12s reverse;width:30px}
+.abat.a4{animation:batpath1 20s linear infinite 12s reverse;width:48px}
 /* delivery bat + envelope */
 .dbat-wrap{position:fixed;inset:0;z-index:60;pointer-events:none;overflow:hidden}
 .dbat{position:absolute;width:120px;color:#140806;filter:drop-shadow(0 0 12px rgba(255,110,30,.55));opacity:0;will-change:transform}
@@ -188,8 +188,8 @@ label.field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mi
   100%{transform:translateY(48px) rotate(8deg);opacity:0}
 }
 @media (max-width:700px){
-  .abat{width:34px}
-  .abat.s2,.abat.a4{width:26px}
+  .abat{width:44px}
+  .abat.s2,.abat.a4{width:34px}
   .abat.a3,.abat.a4{display:none} /* light on phones: 2 ambient */
   .dbat{width:96px}
 }
